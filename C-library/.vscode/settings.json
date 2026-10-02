@@ -1,0 +1,37 @@
+{
+	"editor.tabSize": 4,
+	"editor.detectIndentation": false,
+	"editor.insertSpaces": false,
+	"editor.rulers": [
+		80
+	],
+	"editor.wordWrap": "off",
+	"files.trimTrailingWhitespace": true,
+	"files.insertFinalNewline": true,
+	"files.trimFinalNewlines": true,
+	"[c]": {
+		"editor.defaultFormatter": null,
+		"editor.formatOnSave": false,
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+	},
+	"workbench.colorCustomizations": {
+		// Fondo del editor
+		"editor.background": "#111111",
+		// Sidebar y panels
+		"sideBar.background": "#252526",
+		"activityBar.background": "#0c0c0c",
+		"panel.background": "#000000",
+		// Barra superior e inferior
+		"titleBar.activeBackground": "#111111",
+		"statusBar.background": "#444444",
+		// Línea actual
+		"editor.lineHighlightBackground": "#444444",
+		// Selección de texto
+		"editor.selectionBackground": "#264f78",
+		// Tabs
+		"tab.activeBackground": "#0f0f0f",
+		"tab.inactiveBackground": "#1a1a1a"
+	},
+	"oneDarkPro.bold": true
+}
