@@ -46,8 +46,8 @@ void	rrb_move(t_list **stack, t_count **count_list)
 
 void	rrr_move(t_list **stack_a, t_list **stack_b, t_count **count_list)
 {
-	ra_move(stack_a, count_list);
-	rb_move(stack_b, count_list);
+	rra_move(stack_a, count_list);
+	rrb_move(stack_b, count_list);
 	(*count_list)->rra -= 1;
 	(*count_list)->rrb -= 1;
 	(*count_list)->rrr += 1;
