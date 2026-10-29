@@ -12,7 +12,6 @@ Monorepo con los proyectos del currículo de 42 de [VicProgram](https://github.c
 | [A_maze_ing](A_maze_ing) | Python | Generador y resolvedor de laberintos en terminal con patrón “42”. |
 | [C-library](C-library) | C / Shell | Ejercicios de la piscina: C00–C07, Shell00–01 y subjects. |
 | [Codexion](Codexion) | C | Simulación de hilos/coders con recursos compartidos. |
-| [Exam03](Exam03) | Python | Ejercicios del Exam03 consolidados en un único archivo. |
 | [Get-next-line](Get-next-line) | C | Lectura de líneas de un file descriptor, con bonus. |
 | [Libft](Libft) | C | Librería estándar propia: strings, memoria, listas y fd. |
 | [Piscine-Discovery-Ciberseguridad](Piscine-Discovery-Ciberseguridad) | Docs | Material y subjects de la piscina de ciberseguridad. |
