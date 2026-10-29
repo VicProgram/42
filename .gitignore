@@ -1,2 +1,23 @@
+# Binarios y compilados
 *.o
+*.a
+*.gch
+*.out
+a.out
 push_swap
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Sistema / editores
+.DS_Store
+*:Zone.Identifier
+*:Zone.Identifier:Zone.Identifier

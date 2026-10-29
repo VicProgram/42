@@ -1,0 +1,86 @@
+Lista de pruebas para Codexion
+Ejecutar desde coders/
+A) Validación de argumentos (Deben fallar)
+Tienen que salir con Error: ... y código de salida distinto a 0.
+Comando	Razón
+./codexion	Faltan argumentos
+./codexion 4 800 200 100 100 3 50	Faltan argumentos (7 en lugar de 8)
+./codexion 4 800 200 100 100 3 50 fifo extra	Sobran argumentos
+./codexion 0 800 200 100 100 3 50 fifo	number_of_coders = 0 (inválido)
+./codexion -1 800 200 100 100 3 50 fifo	Negativo
+./codexion 4 -800 200 100 100 3 50 fifo	time_to_burnout negativo
+./codexion 4 800 200 100 100 -1 50 fifo	number_of_compiles_required negativo
+./codexion 4 800 200 100 100 3 -50 fifo	dongle_cooldown negativo
+./codexion 4 800a 200 100 100 3 50 fifo	No entero
+./codexion 4 800 200.5 100 100 3 50 fifo	Decimal
+./codexion 4 800 200 100 100 3 50 abc	Scheduler inválido
+./codexion 4 800 200 100 100 3 50 FIFO	Mayúsculas (debe ser exacto fifo o edf)
+./codexion 4 800 200 100 100 3 50 Fifo	Mixto (inválido)
+B) Casos básicos (Deben funcionar)
+Comprobar que arranca, crea hilos, coge dongles y sigue el ciclo.
+Comando	Notas
+./codexion 1 1000 100 100 100 2 0 fifo	Caso especial n=1. Debe coger 1 solo dongle por compilación, no 2.
+./codexion 1 1000 100 100 100 2 0 edf	Mismo con edf.
+./codexion 2 1000 150 50 50 3 50 fifo	Pocos coders, sin presión.
+./codexion 2 1000 150 50 50 3 50 edf	Mismo con edf.
+./codexion 4 1000 200 100 100 3 50 fifo	Caso clásico.
+./codexion 4 1000 200 100 100 3 50 edf	Caso clásico con edf.
+./codexion 6 1500 150 100 100 4 30 fifo	Más coders, más contención.
+C) Sin burnout (Parámetros viables)
+Estos deben terminar solos cuando todos hayan compilado number_of_compiles_required veces. NO debe aparecer burned out.
+Comando	Notas
+./codexion 2 3000 100 50 50 4 30 fifo	Holgado
+./codexion 2 3000 100 50 50 4 30 edf	Holgado
+./codexion 3 3000 100 50 50 4 20 fifo	Holgado
+./codexion 3 3000 100 50 50 4 20 edf	Holgado
+./codexion 4 3000 100 50 50 4 30 fifo	Holgado
+./codexion 4 3000 100 50 50 4 30 edf	Holgado
+./codexion 5 3000 80 40 40 5 25 fifo	Holgado
+./codexion 5 3000 80 40 40 5 25 edf	Holgado
+./codexion 6 4000 70 40 40 5 20 fifo	Holgado
+./codexion 6 4000 70 40 40 5 20 edf	Holgado
+D) Con burnout (Parámetros inviables)
+Estos deben parar por burnout. Debe aparecer exactamente 1 línea burned out.
+Comando	Notas
+./codexion 2 40 200 50 50 100 0 fifo	Muy ajustado, suele quemarse
+./codexion 2 40 200 50 50 100 0 edf	Comparar con fifo
+./codexion 3 50 200 50 50 100 0 fifo	Clásico para ver burnout
+./codexion 3 50 200 50 50 100 0 edf	Clásico para ver burnout
+./codexion 4 50 200 50 50 100 0 fifo	Contención alta
+./codexion 4 50 200 50 50 100 0 edf	Contención alta
+./codexion 5 40 250 50 50 100 0 fifo	Muy inviable
+./codexion 5 40 250 50 50 100 0 edf	Muy inviable
+E) Cooldown
+Comprobar que dongle_cooldown afecta al ritmo.
+Comando	Notas
+./codexion 3 1000 50 50 50 3 0 fifo	cooldown = 0 -> más ágil
+./codexion 3 1000 50 50 50 3 50 fifo	cooldown = 50
+./codexion 3 1000 50 50 50 3 150 fifo	cooldown = 150 -> más lento
+./codexion 4 1500 80 40 40 4 0 edf	Con edf y cooldown 0
+./codexion 4 1500 80 40 40 4 100 edf	Con edf y cooldown mayor
+F) Estrés (Rendimiento / Cuélgues)
+Para pillar cuélgues raros. Mejor con timeout.
+timeout 10 ./codexion 8 3000 60 40 40 5 20 fifo
+timeout 10 ./codexion 8 3000 60 40 40 5 20 edf
+timeout 10 ./codexion 7 2500 70 40 40 4 25 fifo
+timeout 10 ./codexion 7 2500 70 40 40 4 25 edf
+G) Comprobaciones a revisar manualmente
+Al mirar la salida hay que fijarse en esto:
+Comprobación	Esperado
+Formato de log	timestamp_in_ms X mensaje exacto: has taken a dongle, is compiling, is debugging, is refactoring, burned out
+Dos dongles	Si n >= 2, dos líneas has taken a dongle seguidas justo antes de is compiling. Si n == 1, una sola.
+Orden del ciclo	has taken a dongle -> has taken a dongle -> is compiling -> is debugging -> is refactoring -> vuelve a empezar
+Serializado	Nunca dos mensajes en la misma línea. Todo va uno por línea.
+Burnout	Máximo 1 línea burned out. Aparece cuando corresponde y la simulación para.
+Parada limpia	Tras burned out o tras terminar todos los ciclos, llega a Program Finished (o termina sin cuelgue).
+Sin cuelgues	Con timeout 10 no debe quedarse colgado.
+Timestamps	Relativos al inicio, coherentes y aumentando.
+FIFO vs EDF	Con parámetros viables, edf no debería quemar mientras fifo sí puede. Con parámetros inviables, ambos pueden quemar.
+H) Valgrind
+Obligatorio para comprobar leaks.
+valgrind --leak-check=full ./codexion 4 3000 100 50 50 4 30 fifo
+valgrind --leak-check=full ./codexion 4 3000 100 50 50 4 30 edf
+valgrind --leak-check=full ./codexion 1 1000 100 50 50 2 0 fifo
+valgrind --leak-check=full ./codexion 3 50 200 50 50 100 0 fifo
+valgrind --leak-check=full ./codexion 4 50 200 50 50 100 0 edf
+Buscar: definitely lost: 0 bytes y indirectly lost: 0 bytes. Los possibly lost/still reachable de glibc/pthreads suelen ser aceptables, las fugas reales de nuestro malloc NO deben aparecer.

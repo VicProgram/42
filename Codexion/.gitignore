@@ -1,0 +1,15 @@
+# 42 subject — do not publish
+es.subject.pdf
+es.subject.pdf:Zone.Identifier
+
+# Windows / WSL alternate data stream metadata
+*:Zone.Identifier
+
+.vscode
+.opencode
+
+*.o
+codexion
+requisitos
+
+subject.txt

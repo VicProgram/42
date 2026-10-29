@@ -2,6 +2,9 @@
 
 # Fly-in
 
+[![CI](https://github.com/VicProgram/fly_ing/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/VicProgram/fly_ing/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 ## Description
 
 Fly-in is a drone routing system that navigates multiple drones through a network of connected zones while minimizing simulation turns and handling movement constraints. The system uses a pathfinding algorithm (A* in time-space with a reservation table) to schedule drone movements, respecting zone capacities, connection capacities, and zone-specific movement costs.
@@ -21,7 +24,7 @@ The project is written in Python 3.10+ and follows a fully object-oriented desig
 make install
 ```
 
-This creates a virtual environment in `.venv/` and installs the required dependencies (flake8, mypy).
+This creates a virtual environment in `.venv/` and installs the required dependencies (flake8, mypy, pytest).
 
 ### Running the simulation
 
@@ -32,19 +35,19 @@ make run
 Or with a specific map:
 
 ```bash
-make run MAP=maps/easy/01_linear_path.txt
-make run MAP=maps/hard/02_capacity_hell.txt
+make run MAP=documentos/maps/easy/01_linear_path.txt
+make run MAP=documentos/maps/hard/02_capacity_hell.txt
 ```
 
 Or directly:
 
 ```bash
-python3 fly_ing.py maps/easy/01_linear_path.txt
+python3 fly_ing.py documentos/maps/easy/01_linear_path.txt
 ```
 
 ### Example
 
-**Input** (`maps/easy/01_linear_path.txt`):
+**Input** (`documentos/maps/easy/01_linear_path.txt`):
 
 ```
 nb_drones: 2
@@ -77,8 +80,24 @@ make debug
 Or with a specific map:
 
 ```bash
-make debug MAP=maps/medium/01_dead_end_trap.txt
+make debug MAP=documentos/maps/medium/01_dead_end_trap.txt
 ```
+
+### Tests
+
+```bash
+make test
+```
+
+The suite has 28 tests and covers:
+
+- the parser: valid maps, metadata, duplicate entities, unknown zones and
+  connections, malformed lines and missing start/end hubs;
+- the simulation: routing to the goal, two-turn restricted zones, hub and link
+  capacity invariants, unreachable maps and the reservation table.
+
+It runs with `pytest` on Python 3.10+ and needs no external services. CI runs the
+same suite on Python 3.10 and 3.12, plus `flake8` and `mypy`.
 
 ### Linting
 
@@ -172,13 +191,17 @@ fly_ing/
 ├── fly_ing.py          # Main entry point
 ├── models.py           # Core classes: DroneMap, Solver, ReservationTable, etc.
 ├── parsing.py          # Parser for the input file format
+├── tests/              # Parser and simulation test suite
+├── documentos/         # Guides, subject and test maps
+│   ├── GUIDE.md
+│   └── maps/
+│       ├── easy/
+│       ├── medium/
+│       ├── hard/
+│       └── challenger/
 ├── Makefile            # Build automation
 ├── requirements.txt    # Python dependencies
-├── maps/               # Test maps
-│   ├── easy/
-│   ├── medium/
-│   ├── hard/
-│   └── challenger/
+├── LICENSE             # MIT
 └── README.md           # This file
 ```
 

@@ -350,7 +350,10 @@ class Solver:
         drones: List of Drone instances to route.
     """
 
-    def __init__(self, dronemap: DroneMap, drones_number: int, show_capacity: bool = False) -> None:
+    def __init__(
+        self, dronemap: DroneMap, drones_number: int,
+        show_capacity: bool = False
+    ) -> None:
         """Initialize the solver with a map and drone count.
 
         Args:
@@ -631,14 +634,19 @@ class Solver:
 
                 for hub in self.map.hubs.values():
                     if hub.hub_type not in ("start", "end"):
-                        used = self._reservation_table._hub_occup.get((hub.name, turn), 0)
+                        used = self._reservation_table._hub_occup.get(
+                            (hub.name, turn), 0
+                        )
                         print(
                             f"Hub {hub.name} (capacity {hub.max_drones}): "
                             f"{used} drones"
                         )
                         for conn in self.map.connections:
-                            used = self._reservation_table._link_occup.get((conn._key(), turn), 0)
+                            used = self._reservation_table._link_occup.get(
+                                (conn._key(), turn), 0
+                            )
                             print(
-                                f"Connection {conn.zone1.name}-{conn.zone2.name} "
+                                f"Connection {conn.zone1.name}-"
+                                f"{conn.zone2.name} "
                                 f"(capacity {conn.capacity}): {used} drones"
                             )

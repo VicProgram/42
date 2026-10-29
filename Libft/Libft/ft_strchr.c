@@ -25,7 +25,7 @@ char	*ft_strchr(const char *s, int c)
 	}
 	while (*s_new)
 	{
-		if (*s_new == (unsigned char)c)
+		if ((unsigned char)*s_new == (unsigned char)c)
 			return (s_new);
 		s_new++;
 	}

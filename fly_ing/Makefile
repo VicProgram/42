@@ -9,7 +9,7 @@ PYTHON      := $(VENV)/bin/python
 PIP         := $(VENV)/bin/pip
 SCRIPT      = fly_ing.py
 
-MAP        ?= maps/easy/01_linear_path.txt
+MAP        ?= documentos/maps/easy/01_linear_path.txt
 
 FLAKE8_EXCLUDE = --exclude=$(VENV)
 MYPY_EXCLUDE   = --exclude $(VENV)
@@ -29,6 +29,10 @@ run: $(VENV)/bin/python
 
 debug: $(VENV)/bin/python
 	$(PYTHON) -m pdb $(SCRIPT) $(MAP)
+
+
+test: $(VENV)/bin/python
+	$(PYTHON) -m pytest -q
 
 
 lint: $(VENV)/bin/python
@@ -68,4 +72,4 @@ clean:
 
 re: clean all
 
-.PHONY: all install debug lint lint-strict clean re run
+.PHONY: all install debug lint lint-strict clean re run test

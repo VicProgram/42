@@ -66,7 +66,7 @@ void				*ft_memchr(const void *s, int c, size_t n);
 void				*ft_calloc(size_t nmemb, size_t size);
 
 size_t				ft_strlcpy(char *dst, const char *src, size_t size);
-size_t				ft_strlcat(char *dest, char *src, unsigned int size);
+size_t				ft_strlcat(char *dest, const char *src, size_t size);
 size_t				ft_strlen(const char *s);
 
 t_list				*ft_lstnew(void *content);

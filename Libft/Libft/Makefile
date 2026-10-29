@@ -24,10 +24,11 @@ INCLUDE = libft.h
 AR = ar rcs
 RM = rm -f
 
-.PHONY: all clean fclean re
-
+.PHONY: all clean fclean re bonus
 
 all: $(NAME)
+
+bonus: all
 
 $(NAME): $(OBJ)
 	$(AR) $(NAME) $(OBJ)
